@@ -7,6 +7,7 @@ import socket
 import string
 import struct
 import zipfile
+from traceback import format_exc
 
 from common import *
 from config import Config
@@ -97,19 +98,28 @@ class ServerClient:
         self.sock.sendall(arg.encode('utf-8'))
 
     def recv_json(self) -> dict | None:
-        header = self.sock.recv(JSON_HEADER_SIZE)
+        try:
+            header = self.sock.recv(JSON_HEADER_SIZE)
+        except Exception as e:
+            header = None
+            self.logger.debug(f"Exception {e}: {format_exc()}")
         if not header:
-            self.logger.debug("Connection closed by server")
+            self.logger.info("Failed retrieving response from server")
             return None
 
         payload_size = struct.unpack("!I", header)[0]
 
         raw_payload = b""
-        while len(raw_payload) < payload_size:
-            chunk = self.sock.recv(min(self.conf.BUFFER_SIZE, payload_size - len(raw_payload)))
-            if not chunk:
-                raise ConnectionError("Connection closed by server mid-transfer")
-            raw_payload += chunk
+        try:
+            while len(raw_payload) < payload_size:
+                chunk = self.sock.recv(min(self.conf.BUFFER_SIZE, payload_size - len(raw_payload)))
+                if not chunk:
+                    self.logger.warning("Connection closed by server mid-transfer")
+                    return None
+                raw_payload += chunk
+        except Exception as e:
+            self.logger.debug(f"Exception {e}: {format_exc()}")
+            self.logger.info("Failed retrieving information from server")
 
         decoded_json = json.loads(raw_payload.decode("utf-8"))
 

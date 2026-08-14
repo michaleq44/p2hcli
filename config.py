@@ -9,7 +9,7 @@ class Config:
 
         self.FILENAME_FMT = str(self.config["filename_fmt"])
         self.ALBUM_NAME_FMT = str(self.config["albumname_fmt"])
-        self.PREFIX = str(self.config["prefix"])
+        self.PREFIX = str(self.config["prefix"]).replace("{HOME}", os.environ.get("HOME", ""))
         self.BUFFER_SIZE = int(self.config["buffer_size"])
         self.SERVER_ADDRESS = str(self.config["server_address"])
         self.SERVER_PORT = int(self.config["server_port"])
