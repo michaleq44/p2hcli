@@ -121,9 +121,12 @@ class ServerClient:
             self.logger.debug(f"Exception {e}: {format_exc()}")
             self.logger.info("Failed retrieving information from server")
 
-        decoded_json = json.loads(raw_payload.decode("utf-8"))
-
-        return decoded_json
+        try:
+            return json.loads(raw_payload.decode("utf-8"))
+        except Exception as e:
+            self.logger.debug(f"Exception {e}: {format_exc()}")
+            self.logger.info("Received malformed information from server")
+            return None
 
     def fetch_search_results(self, arg: str, album: bool = False) -> list[tuple] | None:
         self.sendrq_header(arg, RequestType.SEARCH_ALBUM if album else RequestType.SEARCH)

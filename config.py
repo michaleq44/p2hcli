@@ -1,4 +1,5 @@
 import socket, json, os
+from pathlib import Path
 
 class Config:
     def __init__(self, fname: str):
@@ -9,7 +10,7 @@ class Config:
 
         self.FILENAME_FMT = str(self.config["filename_fmt"])
         self.ALBUM_NAME_FMT = str(self.config["albumname_fmt"])
-        self.PREFIX = str(self.config["prefix"]).replace("{HOME}", os.environ.get("HOME", ""))
+        self.PREFIX = os.path.normpath(str(self.config["prefix"]).replace("{HOME}", str(Path.home())))
         self.BUFFER_SIZE = int(self.config["buffer_size"])
         self.SERVER_ADDRESS = str(self.config["server_address"])
         self.SERVER_PORT = int(self.config["server_port"])

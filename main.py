@@ -35,6 +35,7 @@ class CommandHandler:
         self.a_results = []
 
     def parsecmd(self, command: str):
+        pass
 
     @staticmethod
     def help():
@@ -56,3 +57,4 @@ if __name__ == "__main__":
     cmdhandler = CommandHandler()
     while True:
         cmd = input(">> ")
+        
