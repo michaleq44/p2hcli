@@ -11,8 +11,6 @@ import zipfile
 from common import *
 from config import Config
 
-CONFIG_FILENAME = "client.json"
-
 class SafeFormatter(string.Formatter):
     def get_value(self, key, args, kwargs):
         if isinstance(key, str) and key not in kwargs:

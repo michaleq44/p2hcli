@@ -15,6 +15,7 @@ class Config:
         self.SERVER_PORT = int(self.config["server_port"])
         self.SOCKET_TIMEOUT = int(self.config["socket_timeout"])
         self.MAX_NUMBER_RESULTS_SHOWN = int(self.config["max_results_shown"])
+        self.DISPLAY_LOGS = bool(self.config["display_logs"])
 
         os.makedirs(self.PREFIX, exist_ok=True)
         socket.setdefaulttimeout(self.SOCKET_TIMEOUT)

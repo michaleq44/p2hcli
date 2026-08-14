@@ -3,6 +3,17 @@ from colorama import Style, Fore
 
 from common import *
 
+class CmdCompleter:
+    def __init__(self, options: list[str]):
+        self.options = sorted(options)
+
+    def complete(self, text, state):
+        matches = [opt for opt in self.options if opt.startswith(text)]
+        try:
+            return matches[state]
+        except IndexError:
+            return None
+
 def generate_track_search_results_print_list(results: list[tuple]) -> list[list[tuple[str, bool]]]:
     return [[(Style.DIM + f"{idx + 1}.", True),
             (result[TagIndex.ARTIST], False),

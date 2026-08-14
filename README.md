@@ -5,7 +5,7 @@ In order to use create a file `client.json`:
 {
   "filename_fmt": "your-song-{title}-by-{artist}-from-{album}",
   "albumname_fmt": "your-{album}-by-{artist}",
-  "download_prefix": "/home/user/Music",
+  "prefix": "/home/user/Music",
   "buffer_size": 131072,
   "server_address": "127.0.0.1",
   "server_port": 3571,
@@ -19,7 +19,7 @@ In order to use create a file `client.json`:
   - `{title}`, `{artist}` and `{album}` get replaced with their values from the song tags
 - `"albumname_fmt"` the format string for download album directory names:
   - `{artist}` and `{album}` get replaced with their values from the song tags
-- `"download_prefix"` the directory to which music should be downloaded
+- `"prefix"` the directory to which music should be downloaded
 - `"buffer_size"` the size of a single chunk downloaded by the client with a socket
 - `"server_address"` the server's IP address (will expand to use multiple servers at some point)
 - `"server_port"` the port on which the server hosts PeerToHear
