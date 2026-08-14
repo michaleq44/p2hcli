@@ -8,6 +8,8 @@ import string
 import struct
 import zipfile
 from traceback import format_exc
+from filetype import guess
+from colorama import Style, Fore
 
 from common import *
 from config import Config
@@ -27,6 +29,12 @@ class FileHandler:
     def save_file(self, data: bytes, tagslist: list, dest: str = ".") -> str:
         if dest == '.':
             dest = self.prefix
+
+        ftype = guess(data)
+        if not ftype.is_extension(tagslist[TagIndex.TYPE]):
+            print(f"Filetype tag doesn't match the actual MIME type. {Fore.RED}{Style.BRIGHT}SERVER IS A SCAMMER!{Style.RESET_ALL}")
+        if not ftype.mime.startswith("audio/"):
+            print(f"The MIME type of the data is not audio. {Fore.RED}{Style.BRIGHT}SERVER IS A SCAMMER!{Style.RESET_ALL}")
 
         context_tags = {
             "title": tagslist[TagIndex.TITLE],
