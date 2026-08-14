@@ -15,7 +15,7 @@ class CmdCompleter:
             return None
 
 def generate_track_search_results_print_list(results: list[tuple]) -> list[list[tuple[str, bool]]]:
-    return [[(Style.DIM + f"{idx + 1}.", True),
+    return [[(Style.DIM + f"{idx + 1}", True),
             (result[TagIndex.ARTIST], False),
             (Style.BRIGHT + Fore.GREEN + result[TagIndex.TITLE], False),
             (Style.DIM + Fore.BLUE + f"({result[TagIndex.ALBUM]})", False),
@@ -37,7 +37,7 @@ def generate_album_contents_print_list(results: list[tuple]) -> list[list[tuple[
            for result in results]
 
 def generate_album_search_results_print_list(results: list[tuple]) -> list[list[tuple[str, bool]]]:
-    return [[(Style.DIM + f"{idx + 1}.", True),
+    return [[(Style.DIM + f"{idx + 1}", True),
              (artist, False),
              (Style.BRIGHT + Fore.GREEN + album, False)]
            for idx, (_, artist, album, dist) in enumerate(results)]
